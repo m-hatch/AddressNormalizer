@@ -90,8 +90,8 @@ This query is used to normalize an address. It requires you to have `access_toke
 **Authentication**
 
 In order to authenticate with the API you need to provide the following headers:
-- `access-token`: **FILL IN**
-- `client`: **FILL IN**
+- `access-token`: T5eSbUMY-h_qcE7WBZ3new
+- `client`:l55M0vhiQprPGyCXmvU76g
 - `app`: `mover`
 
 Example Query:
