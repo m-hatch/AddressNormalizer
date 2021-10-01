@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap'
 import styles from '../styles/confirm.module.css'
 
@@ -37,6 +38,12 @@ const formatAddress = (address) => {
 };
 
 const Confirm = () => {
+  const router = useRouter();
+
+  const onEdit = () => {
+    router.push('/');
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -54,7 +61,7 @@ const Confirm = () => {
           {formatAddress(data.normalized.address)}
         </div>
 
-        <Button className="p-3" variant="outline-primary" type="submit">
+        <Button onClick={onEdit} className="p-3" variant="outline-primary" type="submit">
           Enter new address
         </Button>
       </main>

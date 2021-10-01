@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import {
   Form,
   Row,
@@ -8,6 +9,12 @@ import {
 import styles from '../styles/index.module.css'
 
 const AddressForm = () => {
+  const router = useRouter();
+
+  const onSubmit = () => {
+    router.push('/choose');
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,7 +56,7 @@ const AddressForm = () => {
               </Col>
             </Row>
 
-            <Button className="p-3" variant="primary" type="button">
+            <Button onClick={onSubmit} className="p-3" variant="primary" type="button">
               Next
             </Button>
           </Form>

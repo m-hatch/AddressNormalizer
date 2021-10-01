@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import styles from '../styles/choose.module.css'
 
 const data = {
@@ -35,8 +36,11 @@ const formatAddress = (address) => {
 };
 
 const Choose = () => {
+  const router = useRouter();
+
   const onChoose = (format) => {
     console.log(data[format].address);
+    router.push('/confirm');
   };
 
   return (
