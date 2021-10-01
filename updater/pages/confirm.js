@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap'
+import FormattedAddress from '/components/FormattedAddress';
 import styles from '../styles/confirm.module.css'
 
 
@@ -27,16 +28,6 @@ const data = {
   }
 };
 
-const formatAddress = (address) => {
-  const unit = address.unit ? `, ${address.unit}` : '';
-  return (
-    <>
-      <span>{`${address.street}${unit}`}</span><br/>
-      <span>{`${address.city}, ${address.state} ${address.postalCode}`}</span>
-    </>
-  );
-};
-
 const Confirm = () => {
   const router = useRouter();
 
@@ -58,7 +49,7 @@ const Confirm = () => {
         </h2>
 
         <div className={styles.confirm}>
-          {formatAddress(data.normalized.address)}
+          <FormattedAddress address={data.normalized.address} />
         </div>
 
         <Button onClick={onEdit} className="p-3" variant="outline-primary" type="submit">

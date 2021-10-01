@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
+import FormattedAddress from '/components/FormattedAddress';
 import styles from '../styles/choose.module.css'
 
 const data = {
@@ -23,16 +24,6 @@ const data = {
     selected: false
     }
   }
-};
-
-const formatAddress = (address) => {
-  const unit = address.unit ? `, ${address.unit}` : '';
-  return (
-    <>
-      <span>{`${address.street}${unit}`}</span><br/>
-      <span>{`${address.city}, ${address.state} ${address.postalCode}`}</span>
-    </>
-  );
 };
 
 const Choose = () => {
@@ -59,12 +50,12 @@ const Choose = () => {
         <div className={styles.choose}>
           <div onClick={() => onChoose('normalized')}>
             <p className={styles.official}>Official USPS Address</p>
-            {formatAddress(data.normalized.address)}
+            <FormattedAddress address={data.normalized.address} />
           </div>
 
           <div onClick={() => onChoose('formInput')}>
             <p className={styles.unrecognized}>Unrecognized Address</p>
-            {formatAddress(data.formInput.address)}
+            <FormattedAddress address={data.formInput.address} />
           </div>
         </div>
       </main>
