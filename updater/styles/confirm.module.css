@@ -1,0 +1,45 @@
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main {
+  padding: 5rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+.confirm {
+  max-width: 800px;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.main > button {
+  margin-top: 3rem;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .main > button {
+    position: absolute;
+    bottom: 10px;
+    width: 94%;
+  }
+}
