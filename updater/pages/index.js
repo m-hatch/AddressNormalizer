@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import AddressContext from '/context/AddressContext';
 import {
   Form,
   Row,
@@ -10,6 +12,12 @@ import styles from '../styles/index.module.css'
 
 const AddressForm = () => {
   const router = useRouter();
+  const [store, dispatch] = useContext(AddressContext);
+  const { street, unit, city, state, postalCode } = store.formInput.address;
+
+  const setField = (field, value) => {
+    dispatch({type: field, payload: value});
+  };
 
   const onSubmit = () => {
     router.push('/choose');
@@ -31,27 +39,27 @@ const AddressForm = () => {
         <div className={styles.form}>
           <Form>
             <Form.Group className="mb-4" controlId="street">
-              <Form.Control className="p-3" type="text" placeholder="STREET ADDRESS" />
+              <Form.Control onChange={e => setField('street', e.target.value)} value={street} className="p-3" type="text" placeholder="STREET ADDRESS" />
             </Form.Group>
 
             <Form.Group className="mb-4" controlId="apt">
-              <Form.Control className="p-3" type="text" placeholder="APARTMENT" />
+              <Form.Control onChange={e => setField('unit', e.target.value)} value={unit} className="p-3" type="text" placeholder="APARTMENT" />
             </Form.Group>
 
             <Form.Group className="mb-4" controlId="city">
-              <Form.Control className="p-3" type="text" placeholder="CITY" />
+              <Form.Control onChange={e => setField('city', e.target.value)} value={city} className="p-3" type="text" placeholder="CITY" />
             </Form.Group>
 
             <Row>
               <Col>
                 <Form.Group className="mb-4" controlId="state">
-                  <Form.Control className="p-3" type="text" placeholder="STATE" />
+                  <Form.Control onChange={e => setField('state', e.target.value)} value={state} className="p-3" type="text" placeholder="STATE" />
                 </Form.Group>
               </Col>
 
               <Col>
                 <Form.Group className="mb-4" controlId="zip">
-                  <Form.Control className="p-3" type="text" placeholder="ZIP" />
+                  <Form.Control onChange={e => setField('postalCode', e.target.value)} value={postalCode} className="p-3" type="text" placeholder="ZIP" />
                 </Form.Group>
               </Col>
             </Row>
