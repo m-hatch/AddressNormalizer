@@ -10,6 +10,33 @@ export const compare = (obj1, obj2) => {
   return true;
 };
 
+export const formValidator = (field, value, errors, setErrors) => {
+  let msg;
+
+  switch (field) {
+    case 'street':
+      msg = (value.length < 4) ? 'Mock validation: len > 3' : '';
+      break;
+    case 'state':
+      msg = (!value) ? 'Must contain a value' : '';
+      break;
+    case 'city':
+      msg = (value.length < 4) ? 'Mock validation: len > 3' : '';
+      break;
+    case 'postalCode':
+      msg = (!value.match(/(?:^|\D)(\d{5})(?!\d)/g)) ? 'Must be 5 digits' : '';
+      break;
+    default:
+      msg = '';
+  }
+
+  setErrors({
+    ...errors,
+    [field]: msg
+  });
+};
+
 export default {
-  compare
+  compare,
+  formValidator
 };

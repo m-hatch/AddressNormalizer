@@ -7,7 +7,7 @@ import { Form, Row, Col, Button, } from 'react-bootstrap'
 import LayoutContainer from '/components/LayoutContainer';
 import FormInput from '/components/FormInput';
 import FormSelect from '/components/FormSelect';
-import { compare, STATES } from '/components/helpers';
+import { compare, formValidator, STATES } from '/components/helpers';
 import styles from '../styles/index.module.css'
 
 const AddressForm = ({ client }) => {
@@ -22,15 +22,12 @@ const AddressForm = ({ client }) => {
   const { street, unit, city, state, postalCode } = store.formInput.address;
 
   const validate = (field, value) => {
-    const msg = (field !== 'unit' && value.length < 1) ? 'Must contain a value' : '';
-    setErrors({
-      ...errors,
-      [field]: msg
-    });
+    formValidator(field, value, errors, setErrors)
   };
 
   const isDisabled = () => (
-    [street, city, state, postalCode].includes('')
+    [street, city, state, postalCode].includes('') ||
+    Object.values(errors).find(e => !!e)
   );
 
   const routeToNext = (address) => {
