@@ -2,15 +2,12 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import AddressContext from '/context/AddressContext';
-import {
-  Form,
-  Row,
-  Col,
-  Button,
-} from 'react-bootstrap'
+import { NORMALIZE_ADDRESS } from '/queries/normalizeAddress';
+import { withApollo } from '@apollo/client/react/hoc';
+import { Form, Row, Col, Button, } from 'react-bootstrap'
 import styles from '../styles/index.module.css'
 
-const AddressForm = () => {
+const AddressForm = ({ client }) => {
   const router = useRouter();
   const [store, dispatch] = useContext(AddressContext);
   const { street, unit, city, state, postalCode } = store.formInput.address;
@@ -19,9 +16,16 @@ const AddressForm = () => {
     dispatch({type: field, payload: value});
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    console.log('CLIENT', client)
+    const { data } = await client.query({
+      query: NORMALIZE_ADDRESS,
+      variables: { address: store.formInput.address },
+    });
+    console.log(store, data)
+    dispatch({type: 'setNormalized', payload: data.normalizedAddress.normalizedAddress})
     router.push('/choose');
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -74,4 +78,4 @@ const AddressForm = () => {
   )
 }
 
-export default AddressForm;
+export default withApollo(AddressForm);

@@ -27,6 +27,14 @@ const reducer = (state, action) => {
       return addressHelper('city', state, action);
     case 'postalCode':
       return addressHelper('postalCode', state, action);
+    case 'setNormalized':
+      return {
+        ...state,
+        normalized: {
+          ...state.normalized,
+          address: action.payload
+        }
+      };
     case 'selectAddress':
       return {
         ...state,
