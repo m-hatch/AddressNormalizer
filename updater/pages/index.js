@@ -6,7 +6,8 @@ import { withApollo } from '@apollo/client/react/hoc';
 import { Form, Row, Col, Button, } from 'react-bootstrap'
 import LayoutContainer from '/components/LayoutContainer';
 import FormInput from '/components/FormInput';
-import { compare } from '/components/helpers';
+import FormSelect from '/components/FormSelect';
+import { compare, STATES } from '/components/helpers';
 import styles from '../styles/index.module.css'
 
 const AddressForm = ({ client }) => {
@@ -61,7 +62,7 @@ const AddressForm = ({ client }) => {
 
         <Row>
           <Col>
-            <FormInput field="state" value={state} validator={validate}  errors={errors} placeholder="STATE" />
+            <FormSelect field="state" options={STATES} value={state} validator={validate}  errors={errors} placeholder="STATE" />
           </Col>
 
           <Col>
