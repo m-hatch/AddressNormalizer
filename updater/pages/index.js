@@ -5,6 +5,7 @@ import { NORMALIZE_ADDRESS } from '/queries/normalizeAddress';
 import { withApollo } from '@apollo/client/react/hoc';
 import { Form, Row, Col, Button, } from 'react-bootstrap'
 import AddressHead from '/components/AddressHead';
+import FormInput from '/components/FormInput';
 import { compare } from '/components/helpers';
 import styles from '../styles/index.module.css'
 
@@ -27,14 +28,9 @@ const AddressForm = ({ client }) => {
     });
   };
 
-  const disableForm = () => (
+  const isDisabled = () => (
     [street, city, state, postalCode].includes('')
   );
-
-  const setField = (field, value) => {
-    validate(field, value);
-    dispatch({type: field, payload: value});
-  };
 
   const routeToNext = (address) => {
     if (compare(store.formInput.address, address)) {
@@ -66,45 +62,21 @@ const AddressForm = ({ client }) => {
 
         <div className={styles.form}>
           <Form>
-            <Form.Group className="mb-4" controlId="street">
-              <Form.Control onChange={e => setField('street', e.target.value)} value={street} isInvalid={!!errors['street']} className="p-3" type="text" placeholder="STREET ADDRESS" />
-              <Form.Control.Feedback type='invalid'>
-                { errors['street'] }
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="unit">
-              <Form.Control onChange={e => setField('unit', e.target.value)} value={unit} className="p-3" type="text" placeholder="APARTMENT" />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="city">
-              <Form.Control onChange={e => setField('city', e.target.value)} value={city} isInvalid={!!errors['city']} className="p-3" type="text" placeholder="CITY" />
-              <Form.Control.Feedback type='invalid'>
-                { errors['city'] }
-              </Form.Control.Feedback>
-            </Form.Group>
+            <FormInput field="street" value={street} validator={validate}  errors={errors} placeholder="STREET ADDRESS" />
+            <FormInput field="unit" value={unit} validator={validate}  errors={errors} placeholder="APARTMENT" />
+            <FormInput field="city" value={city} validator={validate}  errors={errors} placeholder="CITY" />
 
             <Row>
               <Col>
-                <Form.Group className="mb-4" controlId="state">
-                  <Form.Control onChange={e => setField('state', e.target.value)} value={state} isInvalid={!!errors['state']} className="p-3" type="text" placeholder="STATE" />
-                  <Form.Control.Feedback type='invalid'>
-                    { errors['state'] }
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <FormInput field="state" value={state} validator={validate}  errors={errors} placeholder="STATE" />
               </Col>
 
               <Col>
-                <Form.Group className="mb-4" controlId="postalCode">
-                  <Form.Control onChange={e => setField('postalCode', e.target.value)} value={postalCode} isInvalid={!!errors['postalCode']} className="p-3" type="text" placeholder="ZIP" />
-                  <Form.Control.Feedback type='invalid'>
-                    { errors['postalCode'] }
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <FormInput field="postalCode" value={postalCode} validator={validate}  errors={errors} placeholder="ZIP" />
               </Col>
             </Row>
 
-            <Button onClick={onSubmit} disabled={disableForm()} className="p-3" variant="primary" type="button">
+            <Button onClick={onSubmit} disabled={isDisabled()} className="p-3" variant="primary" type="button">
               Next
             </Button>
           </Form>
