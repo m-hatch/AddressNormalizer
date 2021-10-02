@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import AddressContext from '/context/AddressContext';
 import { Button } from 'react-bootstrap'
-import AddressHead from '/components/AddressHead';
+import LayoutContainer from '/components/LayoutContainer';
 import FormattedAddress from '/components/FormattedAddress';
 import styles from '../styles/confirm.module.css'
 
@@ -17,23 +17,17 @@ const Confirm = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <AddressHead page="3" />
+    <LayoutContainer title="Does this address look correct?" page="3" className={styles.confirm}>
 
-      <main className={styles.main}>
-        <h2 className={styles.description}>
-          Does this address look correct?
-        </h2>
+      <div className={styles.address}>
+        <FormattedAddress address={selected} />
+      </div>
 
-        <div className={styles.confirm}>
-          <FormattedAddress address={selected} />
-        </div>
+      <Button onClick={onEdit} className="button p-3" variant="outline-primary" type="submit">
+        Enter new address
+      </Button>
 
-        <Button onClick={onEdit} className="p-3" variant="outline-primary" type="submit">
-          Enter new address
-        </Button>
-      </main>
-    </div>
+    </LayoutContainer>
   )
 }
 

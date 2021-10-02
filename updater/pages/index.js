@@ -4,7 +4,7 @@ import AddressContext from '/context/AddressContext';
 import { NORMALIZE_ADDRESS } from '/queries/normalizeAddress';
 import { withApollo } from '@apollo/client/react/hoc';
 import { Form, Row, Col, Button, } from 'react-bootstrap'
-import AddressHead from '/components/AddressHead';
+import LayoutContainer from '/components/LayoutContainer';
 import FormInput from '/components/FormInput';
 import { compare } from '/components/helpers';
 import styles from '../styles/index.module.css'
@@ -52,37 +52,29 @@ const AddressForm = ({ client }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <AddressHead page="1" />
+    <LayoutContainer title="What address are you moving FROM?" page="1" className={styles.form}>
 
-      <main className={styles.main}>
-        <h2 className={styles.description}>
-          What address are you moving FROM?
-        </h2>
+      <Form>
+        <FormInput field="street" value={street} validator={validate}  errors={errors} placeholder="STREET ADDRESS" />
+        <FormInput field="unit" value={unit} validator={validate}  errors={errors} placeholder="APARTMENT" />
+        <FormInput field="city" value={city} validator={validate}  errors={errors} placeholder="CITY" />
 
-        <div className={styles.form}>
-          <Form>
-            <FormInput field="street" value={street} validator={validate}  errors={errors} placeholder="STREET ADDRESS" />
-            <FormInput field="unit" value={unit} validator={validate}  errors={errors} placeholder="APARTMENT" />
-            <FormInput field="city" value={city} validator={validate}  errors={errors} placeholder="CITY" />
+        <Row>
+          <Col>
+            <FormInput field="state" value={state} validator={validate}  errors={errors} placeholder="STATE" />
+          </Col>
 
-            <Row>
-              <Col>
-                <FormInput field="state" value={state} validator={validate}  errors={errors} placeholder="STATE" />
-              </Col>
+          <Col>
+            <FormInput field="postalCode" value={postalCode} validator={validate}  errors={errors} placeholder="ZIP" />
+          </Col>
+        </Row>
 
-              <Col>
-                <FormInput field="postalCode" value={postalCode} validator={validate}  errors={errors} placeholder="ZIP" />
-              </Col>
-            </Row>
+        <Button onClick={onSubmit} disabled={isDisabled()} className="p-3" variant="primary" type="button">
+          Next
+        </Button>
+      </Form>
 
-            <Button onClick={onSubmit} disabled={isDisabled()} className="p-3" variant="primary" type="button">
-              Next
-            </Button>
-          </Form>
-        </div>
-      </main>
-    </div>
+    </LayoutContainer>
   )
 }
 
