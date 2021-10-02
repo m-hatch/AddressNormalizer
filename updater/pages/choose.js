@@ -8,7 +8,7 @@ import styles from '../styles/choose.module.css'
 const Choose = () => {
   const router = useRouter();
   const [store, dispatch] = useContext(AddressContext);
-console.log(store)
+
   const onChoose = (format) => {
     dispatch({type: 'selectAddress', payload: format});
     router.push('/confirm');

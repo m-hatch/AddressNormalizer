@@ -5,6 +5,7 @@ import AddressContext from '/context/AddressContext';
 import { NORMALIZE_ADDRESS } from '/queries/normalizeAddress';
 import { withApollo } from '@apollo/client/react/hoc';
 import { Form, Row, Col, Button, } from 'react-bootstrap'
+import { compare } from '/components/helpers';
 import styles from '../styles/index.module.css'
 
 const AddressForm = ({ client }) => {
@@ -16,15 +17,23 @@ const AddressForm = ({ client }) => {
     dispatch({type: field, payload: value});
   };
 
+  const routeToNext = (address) => {
+    if (compare(store.formInput.address, address)) {
+      dispatch({type: 'selectAddress', payload: 'formInput'});
+      router.push('/confirm');
+    } else {
+      dispatch({type: 'setNormalized', payload: address});
+      router.push('/choose');
+    }
+  };
+
   const onSubmit = async () => {
-    console.log('CLIENT', client)
     const { data } = await client.query({
       query: NORMALIZE_ADDRESS,
       variables: { address: store.formInput.address },
     });
-    console.log(store, data)
-    dispatch({type: 'setNormalized', payload: data.normalizedAddress.normalizedAddress})
-    router.push('/choose');
+
+    routeToNext(data.normalizedAddress.normalizedAddress);
   };
 
   return (
