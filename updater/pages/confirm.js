@@ -1,37 +1,18 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import AddressContext from '/context/AddressContext';
 import { Button } from 'react-bootstrap'
 import FormattedAddress from '/components/FormattedAddress';
 import styles from '../styles/confirm.module.css'
 
-
-const data = {
-  formInput: {
-    address: {
-    street: "19 Union Square West",
-    unit: "",
-    state: "NY",
-    city: "New York",
-    postalCode: "10001",
-    selected: false
-    }
-  },
-  normalized: {
-    address: {
-    street: "19 Union Square West",
-    unit: "12th floor",
-    state: "NY",
-    city: "New York",
-    postalCode: "10001",
-    selected: false
-    }
-  }
-};
-
 const Confirm = () => {
   const router = useRouter();
+  const [store, dispatch] = useContext(AddressContext);
+  const selected = store.formInput.selected ? store.formInput.address : store.normalized.address;
 
   const onEdit = () => {
+    dispatch({type: 'resetSelected'})
     router.push('/');
   }
 
@@ -49,7 +30,7 @@ const Confirm = () => {
         </h2>
 
         <div className={styles.confirm}>
-          <FormattedAddress address={data.normalized.address} />
+          <FormattedAddress address={selected} />
         </div>
 
         <Button onClick={onEdit} className="p-3" variant="outline-primary" type="submit">

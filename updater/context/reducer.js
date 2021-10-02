@@ -10,6 +10,11 @@ const addressHelper = (field, state, action) => ({
   }
 });
 
+const selectedHelper = (state, type, bool) => ({
+  ...state[type],
+  selected: bool
+});
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'street':
@@ -22,6 +27,16 @@ const reducer = (state, action) => {
       return addressHelper('city', state, action);
     case 'postalCode':
       return addressHelper('postalCode', state, action);
+    case 'selectAddress':
+      return {
+        ...state,
+        [action.payload]: selectedHelper(state, action.payload, true)
+      };
+    case 'resetSelected':
+      return {
+        formInput: selectedHelper(state, 'formInput', false),
+        normalized: selectedHelper(state, 'normalized', false)
+      };
     default:
       return state;
   }

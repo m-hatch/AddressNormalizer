@@ -1,36 +1,16 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import AddressContext from '/context/AddressContext';
 import FormattedAddress from '/components/FormattedAddress';
 import styles from '../styles/choose.module.css'
 
-const data = {
-  formInput: {
-    address: {
-    street: "19 Union Square West",
-    unit: "",
-    state: "NY",
-    city: "New York",
-    postalCode: "10001",
-    selected: false
-    }
-  },
-  normalized: {
-    address: {
-    street: "19 Union Square West",
-    unit: "12th floor",
-    state: "NY",
-    city: "New York",
-    postalCode: "10001",
-    selected: false
-    }
-  }
-};
-
 const Choose = () => {
   const router = useRouter();
-
+  const [store, dispatch] = useContext(AddressContext);
+console.log(store)
   const onChoose = (format) => {
-    console.log(data[format].address);
+    dispatch({type: 'selectAddress', payload: format});
     router.push('/confirm');
   };
 
@@ -50,12 +30,12 @@ const Choose = () => {
         <div className={styles.choose}>
           <div onClick={() => onChoose('normalized')}>
             <p className={styles.official}>Official USPS Address</p>
-            <FormattedAddress address={data.normalized.address} />
+            <FormattedAddress address={store.normalized.address} />
           </div>
 
           <div onClick={() => onChoose('formInput')}>
             <p className={styles.unrecognized}>Unrecognized Address</p>
-            <FormattedAddress address={data.formInput.address} />
+            <FormattedAddress address={store.formInput.address} />
           </div>
         </div>
       </main>
