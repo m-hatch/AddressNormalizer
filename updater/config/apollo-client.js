@@ -17,7 +17,8 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
+  uri: 'https://api.staging.updater.com/graphql',
+  // link: concat(authMiddleware, httpLink),
 });
 
 export default client;
